@@ -9,6 +9,14 @@ class JIRATest < Service::TestCase
     @stubs.post "/a/rest/api/a/issue/1/transitions" do |env|
       assert_equal 'application/json', env[:request_headers]['Content-Type']
       assert_equal 'foo.com', env[:url].host
+      assert_equal basic_auth('u', 'p'), env[:request_headers]['authorization']
+      [200, {}, '']
+    end
+
+   @stubs.post "a/rest/api/a/issue/1/comment" do |env|
+      assert_equal 'application/json', env[:request_headers]['Content-Type']
+      assert_equal 'foo.com', env[:url].host
+      assert_equal basic_auth('u', 'p'), env[:request_headers]['authorization']
       [200, {}, '']
     end
 
